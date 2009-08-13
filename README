@@ -1,0 +1,38 @@
+QuoteDB
+
+Parses a wikiquote dump and enter the quotes in a sqlite3 database.
+
+The code was written using Chicken Scheme v3 and the sqlite3 + ssax eggs.
+
+You can find the latest english wikiquote dumps at http://download.wikipedia.org/enwikiquote/latest/
+You will want the pages-articles xml.
+
+Usage:
+
+parse_dump.scm is the code that actually does the parsing of the xml, The file that it parses is at the top, and is not taken as a command line param. The Quotes are dumped to the sqlite database "quote.db". The wikiquote dumps can be rather large, and can take many hours to parse. Additionally you will likely want to compile the application before running it.
+
+csc parse_dump.scm
+./parse_dump
+
+index_db.scm will run through an already dumped database and build a seperate index of all the tokens in the quotes to make it better searchable.
+
+csc index_db.scm
+./index_db
+
+search.scm is a bit of utility code to search the database, this needs to be used by other code and isn't actually a self contained application It was build for a bot that would just select quotes based on other tokens.
+
+Database:
+
+The Schema of the database is quite simple, here are the construction statements:
+
+"CREATE quotes_index (token, quote_id);"
+"CREATE quotes (id PRIMARY KEY, quote TEXT);"
+
+Problems:
+
+* Due to the format of wikiquote there are occasional quotes that still have formatting issues.
+  Some may be things that should be striped, but often times it's better to just update Wikiquote to make the data more parseable, this is often an improvement to the wiki as a whole.
+  Though there should be a mechanism in the database itself to flag quotes as bad.
+* Database should store more quote information; Such as source page, quote source, date added, etc.
+* The search needs better work to return more appropiate quotes based on a word list.
+* The ability to actually return lists of quotes would also be very nice.
