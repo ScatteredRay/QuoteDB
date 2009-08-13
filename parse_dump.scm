@@ -1,3 +1,5 @@
+;; Copyright (c) 2009, Nicholas "Indy" Ray. All rights reserved.
+;; See the LICENSE file for usage, modification, and distribution terms.
 (require-extension ssax)
 (require-extension sqlite3)
 (require-extension srfi-13)

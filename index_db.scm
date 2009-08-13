@@ -1,3 +1,5 @@
+;; Copyright (c) 2009, Nicholas "Indy" Ray. All rights reserved.
+;; See the LICENSE file for usage, modification, and distribution terms.
 (require-extension sqlite3)
 
 (define (read-all #!optional in) (let ((R (read (if in in (current-input-port)))))
